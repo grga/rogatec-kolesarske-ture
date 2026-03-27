@@ -18,15 +18,21 @@ body{font-family:'Source Sans 3',sans-serif;color:#2c2c2c;background:#fff;}
 .stat:last-child{border-right:none;}
 .stat strong{display:block;font-family:'EB Garamond',serif;font-size:1.4rem;color:#fff;line-height:1.1;}
 .stat span{font-size:.6rem;text-transform:uppercase;letter-spacing:.8px;opacity:.65;color:#fff;}
-.seznam{max-width:1060px;margin:0 auto;padding:36px 16px 60px;display:flex;flex-direction:column;gap:32px;}
-.kartica{display:grid;grid-template-columns:1fr 1fr;border:1px solid #e4deda;border-radius:8px;overflow:hidden;box-shadow:0 2px 16px rgba(139,58,42,.07);transition:box-shadow .25s,transform .25s;}
-.kartica:hover{box-shadow:0 6px 32px rgba(139,58,42,.14);transform:translateY(-2px);}
-.kartica:nth-child(even){direction:rtl;}
-.kartica:nth-child(even)>*{direction:ltr;}
+.seznam{max-width:1060px;margin:0 auto;padding:36px 16px 60px;display:flex;flex-direction:column;gap:40px;}
+.kartica{border:1px solid #e4deda;border-radius:8px;overflow:hidden;box-shadow:0 2px 16px rgba(139,58,42,.07);transition:box-shadow .2s;}
+.kartica:hover{box-shadow:0 6px 32px rgba(139,58,42,.13);}
+
+/* Galerija */
+.galeria{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:220px;gap:3px;background:#e4deda;cursor:pointer;}
+.galeria img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s;}
+.galeria img:hover{opacity:.88;}
+
+/* Info + mapa */
+.kartica-spodaj{display:grid;grid-template-columns:1fr 1fr;}
 .info{padding:24px 24px 20px;background:#fff;display:flex;flex-direction:column;gap:10px;border-left:4px solid #8B3A2A;}
+.kartica:nth-child(even) .kartica-spodaj{direction:rtl;}
+.kartica:nth-child(even) .kartica-spodaj>*{direction:ltr;}
 .kartica:nth-child(even) .info{border-left:none;border-right:4px solid #8B3A2A;}
-.foto-ph{background:#f5eeec;border:2px dashed #d4b8b3;border-radius:6px;padding:14px;text-align:center;font-size:.78rem;color:#b07060;}
-.foto-ph strong{display:block;font-size:.82rem;margin-bottom:2px;color:#8B3A2A;}
 .znacke{display:flex;gap:5px;flex-wrap:wrap;}
 .z{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.9px;padding:3px 10px;border-radius:3px;}
 .zz{background:#fbeae8;color:#6b2c1f;}.zs{background:#fdf3e3;color:#7a5100;}.zl{background:#eaf4ed;color:#1f6035;}.zt{background:#f5eeec;color:#8B3A2A;}
@@ -37,24 +43,38 @@ body{font-family:'Source Sans 3',sans-serif;color:#2c2c2c;background:#fff;}
 .pod{background:#f5f3f1;padding:9px 5px;text-align:center;}
 .pv{display:block;font-family:'EB Garamond',serif;font-size:1.05rem;color:#8B3A2A;}
 .po{display:block;font-size:.62rem;text-transform:uppercase;letter-spacing:.6px;color:#999;margin-top:2px;}
-.gumbi{display:flex;flex-direction:row;gap:8px;flex-wrap:nowrap;}
+.gumbi{display:flex;gap:8px;}
 .g{font-size:.8rem;font-weight:600;padding:9px 14px;border-radius:4px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;transition:all .18s;}
 .gg{background:#8B3A2A;color:#fff;border:2px solid #8B3A2A;flex:1;justify-content:center;}
-.gg:hover{background:#6b2c1f;border-color:#6b2c1f;}
+.gg:hover{background:#6b2c1f;}
 .gx{background:#fff;color:#8B3A2A;border:2px solid #e4deda;flex-shrink:0;}
 .gx:hover{border-color:#8B3A2A;background:#f9f2f0;}
-.mapa-wrap{position:relative;overflow:hidden;background:#ede8e5;min-height:300px;}
-.mapa-wrap iframe{width:calc(100% + 2px);height:calc(100% + 80px);min-height:380px;border:none;display:block;margin:0 0 0 -1px;}
+.mapa-wrap{position:relative;overflow:hidden;background:#ede8e5;min-height:280px;}
+.mapa-wrap iframe{width:calc(100% + 2px);height:calc(100% + 80px);min-height:360px;border:none;display:block;margin:0 0 0 -1px;}
 .moba{position:absolute;bottom:0;left:0;right:0;height:100px;background:#fff;pointer-events:none;z-index:10;}
 .mota{position:absolute;top:0;left:0;right:0;height:4px;background:#ede8e5;pointer-events:none;z-index:10;}
 footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px solid #f0ebe8;}
+
+/* Lightbox */
+.lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:999;align-items:center;justify-content:center;}
+.lb.open{display:flex;}
+.lb img{max-width:90vw;max-height:86vh;object-fit:contain;border-radius:4px;}
+.lb-x{position:absolute;top:16px;right:20px;color:#fff;font-size:2rem;cursor:pointer;opacity:.75;line-height:1;}
+.lb-x:hover{opacity:1;}
+.lb-p,.lb-n{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:2.4rem;cursor:pointer;padding:14px;opacity:.65;user-select:none;}
+.lb-p:hover,.lb-n:hover{opacity:1;}
+.lb-p{left:4px;}.lb-n{right:4px;}
+
+/* MOBILNI */
 @media(max-width:720px){
-  .uvod{padding:36px 20px 32px;}.uvod h1{font-size:2rem;}.uvod p{font-size:.92rem;margin-bottom:22px;}
+  .uvod{padding:36px 20px 32px;}.uvod h1{font-size:2rem;}
   .stats{max-width:100%;}.stat{padding:10px 4px;}.stat strong{font-size:1.2rem;}.stat span{font-size:.55rem;}
-  .kartica{display:flex;flex-direction:column;direction:ltr;}.kartica:nth-child(even){direction:ltr;}
-  .info{order:1;border-left:4px solid #8B3A2A !important;border-right:none !important;}
-  .kartica:nth-child(even) .info{border-left:4px solid #8B3A2A !important;border-right:none !important;}
-  .mapa-wrap{order:2;min-height:220px;}.mapa-wrap iframe{min-height:280px;}
+  .galeria{grid-template-columns:1fr 1fr;grid-template-rows:140px 140px;}
+  .galeria img:first-child{grid-column:1/3;}
+  .kartica-spodaj{grid-template-columns:1fr;direction:ltr;}
+  .kartica:nth-child(even) .kartica-spodaj{direction:ltr;}
+  .info{border-left:4px solid #8B3A2A !important;border-right:none !important;}
+  .mapa-wrap{min-height:220px;}.mapa-wrap iframe{min-height:280px;}
   .st{font-size:2.2rem;}.nas{font-size:1.05rem;}.g{font-size:.75rem;padding:8px 10px;}
 }
 @media(max-width:380px){.gumbi{flex-wrap:wrap;}.gg,.gx{flex:1 1 100%;}}
@@ -72,12 +92,203 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
   </div>
 </section>
 <div class="seznam">
-  <article class="kartica"><div class="info"><div class="znacke"><span class="z zz">Zahtevna</span><span class="z zt">🏔 Hribovska</span></div><div class="st">01</div><h2 class="nas">Muzej na prostem – Rudijev dom na Donački Gori – Stoperce – Dvorec Strmol</h2><div class="foto-ph"><strong>📷 Vstavi fotografijo ture 01</strong>Razgled z Donačke Gore ali Muzej na prostem</div><p class="opis">Kolesarska tura, ki združi dve največji znamenitosti Rogatca z vzponom na razgledni Rudijev dom. Po travnatih grebenih z razgledom na Boč, Donačko Goro in Haloze.</p><div class="pods"><div class="pod"><span class="pv">24,5 km</span><span class="po">Razdalja</span></div><div class="pod"><span class="pv">↑ 1035 m</span><span class="po">Vzpon</span></div><div class="pod"><span class="pv">228–622 m</span><span class="po">Višina</span></div></div><div class="gumbi"><a href="https://web.bikemap.net/r/17713984" target="_blank" rel="noopener" class="g gg">🗺 Odpri na Bikemap</a><a href="#" class="g gx">⬇ GPX</a></div></div><div class="mapa-wrap"><div class="mota"></div><iframe src="https://widgets.bikemap.net/r/17713984?unit=metric" loading="lazy" title="Tura 01"></iframe><div class="moba"></div></div></article>
-  <article class="kartica"><div class="info"><div class="znacke"><span class="z zz">Zahtevna</span><span class="z zt">🏛 Po sledeh obrti</span></div><div class="st">02</div><h2 class="nas">S kolesom po sledeh stare obrti – Dvorec Strmol – Trlično – Muzej na prostem</h2><div class="foto-ph"><strong>📷 Vstavi fotografijo ture 02</strong>Trlično ali Muzej na prostem</div><p class="opis">Osrednja kolesarska tura Rogatca. Iz Dvorca Strmol skozi Trlično — čez Žahenberc in mimo ribnika do Muzeja na prostem Rogatec.</p><div class="pods"><div class="pod"><span class="pv">30,8 km</span><span class="po">Razdalja</span></div><div class="pod"><span class="pv">↑ 1059 m</span><span class="po">Vzpon</span></div><div class="pod"><span class="pv">224–561 m</span><span class="po">Višina</span></div></div><div class="gumbi"><a href="https://web.bikemap.net/r/17861475" target="_blank" rel="noopener" class="g gg">🗺 Odpri na Bikemap</a><a href="#" class="g gx">⬇ GPX</a></div></div><div class="mapa-wrap"><div class="mota"></div><iframe src="https://widgets.bikemap.net/r/17861475?unit=metric" loading="lazy" title="Tura 02"></iframe><div class="moba"></div></div></article>
-  <article class="kartica"><div class="info"><div class="znacke"><span class="z zs">Srednja</span><span class="z zt">🏰 Gradovi &amp; Samostan</span></div><div class="st">03</div><h2 class="nas">Dvorec Strmol – Vonarje – Podčetrtek – Grad Podčetrek – Olimje – Rogatec</h2><div class="foto-ph"><strong>📷 Vstavi fotografijo ture 03</strong>Grad Podčetrek ali Samostan Olimje</div><p class="opis">Kulturno-zgodovinska tura mimo Gradu Podčetrek in Samostana Olimje z najstarejšo lekarno v Sloveniji. Pretežno nizinska trasa za kolesarje vseh ravni.</p><div class="pods"><div class="pod"><span class="pv">49,8 km</span><span class="po">Razdalja</span></div><div class="pod"><span class="pv">↑ 901 m</span><span class="po">Vzpon</span></div><div class="pod"><span class="pv">190–349 m</span><span class="po">Višina</span></div></div><div class="gumbi"><a href="https://web.bikemap.net/r/17756852" target="_blank" rel="noopener" class="g gg">🗺 Odpri na Bikemap</a><a href="#" class="g gx">⬇ GPX</a></div></div><div class="mapa-wrap"><div class="mota"></div><iframe src="https://widgets.bikemap.net/r/17756852?unit=metric" loading="lazy" title="Tura 03"></iframe><div class="moba"></div></div></article>
-  <article class="kartica"><div class="info"><div class="znacke"><span class="z zs">Srednja</span><span class="z zt">🌿 Čezmejna</span></div><div class="st">04</div><h2 class="nas">Muzej na prostem – Vonarje – Podčetrtek – Kumrovec – Dvorec Strmol – Rogatec</h2><div class="foto-ph"><strong>📷 Vstavi fotografijo ture 04</strong>Kumrovec ali obmejna pokrajina</div><p class="opis">Čezmejna pustolovščina do Kumrovca. Najdaljša tura za izkušene kolesarje, ki si želijo narave, zgodovine in mednarodnega okusa.</p><div class="pods"><div class="pod"><span class="pv">69,2 km</span><span class="po">Razdalja</span></div><div class="pod"><span class="pv">↑ 1285 m</span><span class="po">Vzpon</span></div><div class="pod"><span class="pv">172–358 m</span><span class="po">Višina</span></div></div><div class="gumbi"><a href="https://web.bikemap.net/r/18198498" target="_blank" rel="noopener" class="g gg">🗺 Odpri na Bikemap</a><a href="#" class="g gx">⬇ GPX</a></div></div><div class="mapa-wrap"><div class="mota"></div><iframe src="https://widgets.bikemap.net/r/18198498?unit=metric" loading="lazy" title="Tura 04"></iframe><div class="moba"></div></div></article>
-  <article class="kartica"><div class="info"><div class="znacke"><span class="z zz">Zahtevna</span><span class="z zt">🏙 Do mesta Ptuj</span></div><div class="st">05</div><h2 class="nas">Muzej na prostem – Donačka Gora – Ptujska Gora – Ptuj</h2><div class="foto-ph"><strong>📷 Vstavi fotografijo ture 05</strong>Razgled z Donačke Gore ali mesto Ptuj</div><p class="opis">Ambiciozna tura iz Rogatca na Rudijev dom, po hrbtih Haloz do Ptujske Gore in v najstarejše slovensko mesto Ptuj. Priporočen povratek z vlakom.</p><div class="pods"><div class="pod"><span class="pv">38,5 km</span><span class="po">Razdalja</span></div><div class="pod"><span class="pv">↑ 1320 m</span><span class="po">Vzpon</span></div><div class="pod"><span class="pv">220–622 m</span><span class="po">Višina</span></div></div><div class="gumbi"><a href="https://web.bikemap.net/r/18214897" target="_blank" rel="noopener" class="g gg">🗺 Odpri na Bikemap</a><a href="#" class="g gx">⬇ GPX</a></div></div><div class="mapa-wrap"><div class="mota"></div><iframe src="https://widgets.bikemap.net/r/18214897?unit=metric" loading="lazy" title="Tura 05"></iframe><div class="moba"></div></div></article>
-  <article class="kartica"><div class="info"><div class="znacke"><span class="z zl">Lahka</span><span class="z zt">🌾 Šaleška dolina</span></div><div class="st">06</div><h2 class="nas">Muzej na prostem – Šmarje pri Jelšah – Celje – Žalec</h2><div class="foto-ph"><strong>📷 Vstavi fotografijo ture 06</strong>Celje ali Žalec</div><p class="opis">Pot se začne pri Muzeju na prostem Rogatec in vodi skozi slikovito podeželje do Šmarja pri Jelšah z baročno cerkvijo in kalvarijo. Nadaljujemo proti Celju z zgodovinskim mestnim jedrom in Celjskim gradom, zaključimo pa v Žalcu — središču Savinjske doline, znanem po hmeljarstvu in fontani piva. Prijetna, nekoliko daljša tura po dolinah z lepimi razgledi in zanimivimi postanki.</p><div class="pods"><div class="pod"><span class="pv">53,6 km</span><span class="po">Razdalja</span></div><div class="pod"><span class="pv">↑ 734 m</span><span class="po">Vzpon</span></div><div class="pod"><span class="pv">218–305 m</span><span class="po">Višina</span></div></div><div class="gumbi"><a href="https://web.bikemap.net/r/18229768" target="_blank" rel="noopener" class="g gg">🗺 Odpri na Bikemap</a><a href="#" class="g gx">⬇ GPX</a></div></div><div class="mapa-wrap"><div class="mota"></div><iframe src="https://widgets.bikemap.net/r/18229768?unit=metric" loading="lazy" title="Tura 06"></iframe><div class="moba"></div></div></article>
+
+  <!-- TURA 01 -->
+  <article class="kartica">
+    <div class="galeria" onclick="openLb(this,event)">
+      <img src="foto01.jpg" alt="Razgled v dolino z Donačke Gore">
+      <img src="foto05.jpg" alt="Zimski razgled z Rudijevega doma">
+      <img src="vse_a.jpg" alt="Donačka Gora pozimi">
+    </div>
+    <div class="kartica-spodaj">
+      <div class="info">
+        <div class="znacke"><span class="z zz">Zahtevna</span><span class="z zt">🏔 Hribovska</span></div>
+        <div class="st">01</div>
+        <h2 class="nas">Muzej na prostem – Rudijev dom na Donački Gori – Stoperce – Dvorec Strmol</h2>
+        <p class="opis">Kolesarska tura, ki združi dve največji znamenitosti Rogatca z vzponom na razgledni Rudijev dom na Donački Gori. Po travnatih grebenih z razgledom na Boč, Donačko Goro in Haloze do Stoperc in nazaj do Dvorca Strmol.</p>
+        <div class="pods">
+          <div class="pod"><span class="pv">24,5 km</span><span class="po">Razdalja</span></div>
+          <div class="pod"><span class="pv">↑ 1035 m</span><span class="po">Vzpon</span></div>
+          <div class="pod"><span class="pv">228–622 m</span><span class="po">Višina</span></div>
+        </div>
+        <div class="gumbi">
+          <a href="https://web.bikemap.net/r/17713984" target="_blank" rel="noopener" class="g gg">🗺 Odpri na Bikemap</a>
+          <a href="#" class="g gx">⬇ GPX</a>
+        </div>
+      </div>
+      <div class="mapa-wrap"><div class="mota"></div><iframe src="https://widgets.bikemap.net/r/17713984?unit=metric" loading="lazy" title="Tura 01"></iframe><div class="moba"></div></div>
+    </div>
+  </article>
+
+  <!-- TURA 02 -->
+  <article class="kartica">
+    <div class="galeria" onclick="openLb(this,event)">
+      <img src="t2_a.jpg" alt="Razgled z Loga proti Hrvaški">
+      <img src="t2_b.jpg" alt="E-bike na poti skozi Log">
+      <img src="t2_c.jpg" alt="Pot na Trlično">
+    </div>
+    <div class="kartica-spodaj">
+      <div class="info">
+        <div class="znacke"><span class="z zz">Zahtevna</span><span class="z zt">🏛 Po sledeh obrti</span></div>
+        <div class="st">02</div>
+        <h2 class="nas">S kolesom po sledeh stare obrti – Dvorec Strmol – Trlično – Muzej na prostem</h2>
+        <p class="opis">Osrednja kolesarska tura Rogatca. Iz Dvorca Strmol skozi Dobovec in Trlično — vas slavnih rokodelcev — čez razgledno točko Žahenberc in mimo ribnika do Muzeja na prostem Rogatec. Tura pripoveduje zgodbo kraja skozi pokrajino samo.</p>
+        <div class="pods">
+          <div class="pod"><span class="pv">30,8 km</span><span class="po">Razdalja</span></div>
+          <div class="pod"><span class="pv">↑ 1059 m</span><span class="po">Vzpon</span></div>
+          <div class="pod"><span class="pv">224–561 m</span><span class="po">Višina</span></div>
+        </div>
+        <div class="gumbi">
+          <a href="https://web.bikemap.net/r/17861475" target="_blank" rel="noopener" class="g gg">🗺 Odpri na Bikemap</a>
+          <a href="#" class="g gx">⬇ GPX</a>
+        </div>
+      </div>
+      <div class="mapa-wrap"><div class="mota"></div><iframe src="https://widgets.bikemap.net/r/17861475?unit=metric" loading="lazy" title="Tura 02"></iframe><div class="moba"></div></div>
+    </div>
+  </article>
+
+  <!-- TURA 03 -->
+  <article class="kartica">
+    <div class="galeria" onclick="openLb(this,event)">
+      <img src="vse_c.jpg" alt="Vinograd z razgledom na Obsotelje">
+      <img src="foto03.jpg" alt="Florjanska cerkev ob poti">
+      <img src="vse_e.jpg" alt="Grad Podčetrek">
+    </div>
+    <div class="kartica-spodaj">
+      <div class="info">
+        <div class="znacke"><span class="z zs">Srednja</span><span class="z zt">🏰 Gradovi &amp; Samostan</span></div>
+        <div class="st">03</div>
+        <h2 class="nas">Dvorec Strmol – Vonarje – Podčetrtek – Grad Podčetrek – Olimje – Rogatec</h2>
+        <p class="opis">Kulturno-zgodovinska tura po Obsotelja, ki v enem dnevu popelje mimo Gradu Podčetrek in Samostana Olimje z najstarejšo lekarno v Sloveniji. Pretežno nizinska trasa za kolesarje vseh ravni.</p>
+        <div class="pods">
+          <div class="pod"><span class="pv">49,8 km</span><span class="po">Razdalja</span></div>
+          <div class="pod"><span class="pv">↑ 901 m</span><span class="po">Vzpon</span></div>
+          <div class="pod"><span class="pv">190–349 m</span><span class="po">Višina</span></div>
+        </div>
+        <div class="gumbi">
+          <a href="https://web.bikemap.net/r/17756852" target="_blank" rel="noopener" class="g gg">🗺 Odpri na Bikemap</a>
+          <a href="#" class="g gx">⬇ GPX</a>
+        </div>
+      </div>
+      <div class="mapa-wrap"><div class="mota"></div><iframe src="https://widgets.bikemap.net/r/17756852?unit=metric" loading="lazy" title="Tura 03"></iframe><div class="moba"></div></div>
+    </div>
+  </article>
+
+  <!-- TURA 04 -->
+  <article class="kartica">
+    <div class="galeria" onclick="openLb(this,event)">
+      <img src="vse_b.jpg" alt="Konji na pašniku z Donačko Goro v ozadju">
+      <img src="foto02.jpg" alt="Jutranja megla med hribi Obsotelja">
+      <img src="vse_c.jpg" alt="Vinogradniški griči Obsotelja">
+    </div>
+    <div class="kartica-spodaj">
+      <div class="info">
+        <div class="znacke"><span class="z zs">Srednja</span><span class="z zt">🌿 Čezmejna</span></div>
+        <div class="st">04</div>
+        <h2 class="nas">Muzej na prostem – Vonarje – Podčetrtek – Kumrovec – Dvorec Strmol – Rogatec</h2>
+        <p class="opis">Čezmejna pustolovščina do Kumrovca — rojstnega kraja Josipa Broza Tita in muzejske vasi na prostem. Najdaljša tura v zbirki za izkušene kolesarje, ki si želijo narave, zgodovine in mednarodnega okusa.</p>
+        <div class="pods">
+          <div class="pod"><span class="pv">69,2 km</span><span class="po">Razdalja</span></div>
+          <div class="pod"><span class="pv">↑ 1285 m</span><span class="po">Vzpon</span></div>
+          <div class="pod"><span class="pv">172–358 m</span><span class="po">Višina</span></div>
+        </div>
+        <div class="gumbi">
+          <a href="https://web.bikemap.net/r/18198498" target="_blank" rel="noopener" class="g gg">🗺 Odpri na Bikemap</a>
+          <a href="#" class="g gx">⬇ GPX</a>
+        </div>
+      </div>
+      <div class="mapa-wrap"><div class="mota"></div><iframe src="https://widgets.bikemap.net/r/18198498?unit=metric" loading="lazy" title="Tura 04"></iframe><div class="moba"></div></div>
+    </div>
+  </article>
+
+  <!-- TURA 05 -->
+  <article class="kartica">
+    <div class="galeria" onclick="openLb(this,event)">
+      <img src="foto01.jpg" alt="Razgled v dolino z Donačke Gore">
+      <img src="vse_a.jpg" alt="Donačka Gora pozimi">
+      <img src="foto01_stoperce.jpg" alt="Stoperce — pogled na Donačko Goro">
+    </div>
+    <div class="kartica-spodaj">
+      <div class="info">
+        <div class="znacke"><span class="z zz">Zahtevna</span><span class="z zt">🏙 Do mesta Ptuj</span></div>
+        <div class="st">05</div>
+        <h2 class="nas">Muzej na prostem – Donačka Gora – Ptujska Gora – Ptuj</h2>
+        <p class="opis">Ambiciozna tura iz Rogatca na Rudijev dom na Donački Gori, nato po hrbtih Haloz do bazilike Ptujska Gora in v najstarejše slovensko mesto Ptuj. Razgledi z Donačke Gore so nepozabni. Priporočen povratek z vlakom.</p>
+        <div class="pods">
+          <div class="pod"><span class="pv">38,5 km</span><span class="po">Razdalja</span></div>
+          <div class="pod"><span class="pv">↑ 1320 m</span><span class="po">Vzpon</span></div>
+          <div class="pod"><span class="pv">220–622 m</span><span class="po">Višina</span></div>
+        </div>
+        <div class="gumbi">
+          <a href="https://web.bikemap.net/r/18214897" target="_blank" rel="noopener" class="g gg">🗺 Odpri na Bikemap</a>
+          <a href="#" class="g gx">⬇ GPX</a>
+        </div>
+      </div>
+      <div class="mapa-wrap"><div class="mota"></div><iframe src="https://widgets.bikemap.net/r/18214897?unit=metric" loading="lazy" title="Tura 05"></iframe><div class="moba"></div></div>
+    </div>
+  </article>
+
+  <!-- TURA 06 -->
+  <article class="kartica">
+    <div class="galeria" onclick="openLb(this,event)">
+      <img src="foto02.jpg" alt="Jutranja megla nad vasjo">
+      <img src="vse_c.jpg" alt="Vinogradniški griči">
+      <img src="foto01_alt.jpg" alt="Pokrajina Obsotelja">
+    </div>
+    <div class="kartica-spodaj">
+      <div class="info">
+        <div class="znacke"><span class="z zl">Lahka</span><span class="z zt">🌾 Šaleška dolina</span></div>
+        <div class="st">06</div>
+        <h2 class="nas">Muzej na prostem – Šmarje pri Jelšah – Celje – Žalec</h2>
+        <p class="opis">Pot se začne pri Muzeju na prostem Rogatec in vodi skozi slikovito podeželje do Šmarja pri Jelšah z baročno cerkvijo in kalvarijo. Nadaljujemo proti Celju z zgodovinskim mestnim jedrom in Celjskim gradom, zaključimo pa v Žalcu — središču Savinjske doline, znanem po hmeljarstvu in fontani piva.</p>
+        <div class="pods">
+          <div class="pod"><span class="pv">53,6 km</span><span class="po">Razdalja</span></div>
+          <div class="pod"><span class="pv">↑ 734 m</span><span class="po">Vzpon</span></div>
+          <div class="pod"><span class="pv">218–305 m</span><span class="po">Višina</span></div>
+        </div>
+        <div class="gumbi">
+          <a href="https://web.bikemap.net/r/18229768" target="_blank" rel="noopener" class="g gg">🗺 Odpri na Bikemap</a>
+          <a href="#" class="g gx">⬇ GPX</a>
+        </div>
+      </div>
+      <div class="mapa-wrap"><div class="mota"></div><iframe src="https://widgets.bikemap.net/r/18229768?unit=metric" loading="lazy" title="Tura 06"></iframe><div class="moba"></div></div>
+    </div>
+  </article>
+
 </div>
 <footer>© 2026 Zavod za kulturo, turizem in razvoj Rogatec · Predogled za interno odobritev</footer>
-</body></html>
+
+<!-- Lightbox -->
+<div class="lb" id="lb">
+  <span class="lb-x" onclick="document.getElementById('lb').classList.remove('open')">✕</span>
+  <span class="lb-p" onclick="lbNav(-1)">❮</span>
+  <img id="lb-img" src="" alt="">
+  <span class="lb-n" onclick="lbNav(1)">❯</span>
+</div>
+<script>
+let imgs=[],ci=0;
+function openLb(gal,e){
+  const t=e.target;
+  if(t.tagName!=='IMG')return;
+  imgs=Array.from(gal.querySelectorAll('img'));
+  ci=imgs.indexOf(t);
+  document.getElementById('lb-img').src=t.src;
+  document.getElementById('lb').classList.add('open');
+}
+function lbNav(d){
+  ci=(ci+d+imgs.length)%imgs.length;
+  document.getElementById('lb-img').src=imgs[ci].src;
+}
+document.getElementById('lb').addEventListener('click',function(e){
+  if(e.target===this)this.classList.remove('open');
+});
+document.addEventListener('keydown',e=>{
+  const lb=document.getElementById('lb');
+  if(!lb.classList.contains('open'))return;
+  if(e.key==='Escape')lb.classList.remove('open');
+  if(e.key==='ArrowLeft')lbNav(-1);
+  if(e.key==='ArrowRight')lbNav(1);
+});
+</script>
+</body>
+</html>
