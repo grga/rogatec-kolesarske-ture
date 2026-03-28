@@ -89,6 +89,26 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
 .lb-p{left:4px;}.lb-n{right:4px;}
 .ebike-info{display:flex;gap:10px;flex-wrap:wrap;margin-top:2px;margin-bottom:2px;}
 .ebike-info span{font-size:.72rem;background:#f5eeec;color:#8B3A2A;padding:3px 8px;border-radius:3px;font-weight:600;}
+
+/* FILTER BLOK */
+.filter-blok{max-width:1060px;margin:0 auto;padding:0 16px 32px;}
+.filter-notranjost{background:#f9f6f5;border-radius:8px;padding:24px 28px;border:1px solid #e4deda;}
+.filter-naslov{font-family:'EB Garamond',serif;font-size:1.3rem;font-weight:700;color:#5a1f12;margin-bottom:4px;}
+.filter-opis{font-size:.85rem;color:#888;margin-bottom:20px;}
+.filter-vrstice{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
+.filter-skupina label{display:block;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#999;margin-bottom:8px;}
+.chipi{display:flex;flex-wrap:wrap;gap:6px;}
+.chip{font-size:.78rem;font-weight:600;padding:5px 12px;border-radius:20px;border:1.5px solid #d4b8b3;background:#fff;color:#8B3A2A;cursor:pointer;transition:all .15s;}
+.chip:hover{border-color:#8B3A2A;background:#fdf0ed;}
+.chip.aktiven{background:#8B3A2A;color:#fff;border-color:#8B3A2A;}
+.filter-select{width:100%;padding:7px 10px;border:1.5px solid #d4b8b3;border-radius:6px;font-size:.82rem;font-family:'Source Sans 3',sans-serif;color:#2c2c2c;background:#fff;cursor:pointer;}
+.filter-select:focus{outline:none;border-color:#8B3A2A;}
+/* Start label na karticah */
+.start-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:#999;margin-bottom:2px;}
+/* Kartica dim ob filtriranju */
+.kartica.skrij{opacity:.25;pointer-events:none;}
+.kartica{transition:opacity .25s;}
+@media(max-width:720px){.filter-vrstice{grid-template-columns:1fr;gap:14px;}.filter-notranjost{padding:18px 16px;}}
 @media(max-width:720px){
   .uvod{padding:36px 20px 32px;}.uvod h1{font-size:2rem;}
   .stats{max-width:100%;}.stat{padding:10px 4px;}.stat strong{font-size:1.2rem;}.stat span{font-size:.55rem;}
@@ -110,13 +130,49 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
 <section class="uvod">
   <div class="uvod-ikona">⚡</div>
   <h1>E-bike ture Rogatec</h1>
-  <p>Več razgleda, manj napora. Izberi traso, rezerviraj e-kolo in doživi Rogatec na najlepši način.</p>
+  <p>Več razgleda, manj napora.<br>Izberi traso, prenesi GPX ali rezerviraj e-kolo za doživetje Rogatca in Obsotelja na najlepši način.</p>
   <div class="stats">
     <div class="stat"><strong>6</strong><span>e-bike tur</span></div>
     <div class="stat"><strong>25–70km</strong><span>dolžina</span></div>
-    <div class="stat"><strong>GPX+KML</strong><span>navigacija</span></div>
+    <div class="stat"><strong>GPX</strong><span>navigacija</span></div>
   </div>
 </section>
+
+<div class="filter-blok">
+  <div class="filter-notranjost">
+    <div class="filter-naslov">Izberi svojo e-bike turo</div>
+    <p class="filter-opis">Najdi traso glede na stopnjo, začetno točko in čas, ki ga imaš na voljo.</p>
+    <div class="filter-vrstice">
+      <div class="filter-skupina">
+        <label>Zahtevnost</label>
+        <div class="chipi" id="f-tezavnost">
+          <button class="chip" data-val="lahka">Lahka</button>
+          <button class="chip" data-val="srednja">Srednja</button>
+          <button class="chip" data-val="zahtevnejsa">Zahtevnejša</button>
+        </div>
+      </div>
+      <div class="filter-skupina">
+        <label>Začetna točka</label>
+        <select class="filter-select" id="f-start">
+          <option value="">Vse</option>
+          <option value="rogatec">Rogatec</option>
+          <option value="zetale">Žetale</option>
+          <option value="ptuj">Ptuj</option>
+          <option value="smarje">Šmarje pri Jelšah</option>
+          <option value="dogovor">Po dogovoru</option>
+        </select>
+      </div>
+      <div class="filter-skupina">
+        <label>Čas</label>
+        <div class="chipi" id="f-cas">
+          <button class="chip" data-val="do2">Do 2 h</button>
+          <button class="chip" data-val="2-4">2–4 h</button>
+          <button class="chip" data-val="celden">Cel dan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="seznam">
 
 <article class="kartica">
@@ -128,7 +184,7 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
   <div class="kartica-spodaj">
     <div class="info">
       <div class="znacke"><span class="z zz">Zahtevna</span><span class="z zt">⚡ Sport / Turbo</span></div>
-      <div class="st">01</div>
+      <div class="start-label" data-tez="zahtevnejsa" data-cas="2-4" data-start="rogatec">Start: Rogatec</div><div class="st">01</div>
       <h2 class="nas">Muzej na prostem – Rudijev dom na Donački Gori – Stoperce – Dvorec Strmol</h2>
       <p class="opis">E-bike tura ki združi dve največji znamenitosti Rogatca z vzponom na razgledni Rudijev dom na Donački Gori. Po travnatih grebenih z razgledom na Boč, Donačko Goro in Haloze do Stoperc in nazaj do Dvorca Strmol.</p><div class="ebike-info"><span>⏱ ~2,5 h</span><span>🔋 70–90 %</span><span>⚙️ Sport/Turbo</span></div>
       <div class="pods"><div class="pod"><span class="pv">24,5 km</span><span class="po">Razdalja</span></div><div class="pod"><span class="pv">↑ 1035 m</span><span class="po">Vzpon</span></div><div class="pod"><span class="pv">228–622 m</span><span class="po">Višina</span></div></div>
@@ -149,8 +205,8 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
   <div class="kartica-spodaj">
     <div class="info">
       <div class="znacke"><span class="z zz">Zahtevna</span><span class="z zt">⚡ Tour / Sport</span></div>
-      <div class="st">02</div>
-      <h2 class="nas">S kolesom po sledeh stare obrti – Dvorec Strmol – Trlično – Muzej na prostem</h2>
+      <div class="start-label" data-tez="zahtevnejsa" data-cas="2-4" data-start="rogatec">Start: Rogatec</div><div class="st">02</div>
+      <h2 class="nas">Z e-kolesom po sledeh stare obrti – Dvorec Strmol – Trlično – Muzej na prostem</h2>
       <p class="opis">Osrednja e-bike tura Rogatca. Iz Dvorca Strmol skozi Dobovec in Trlično — vas slavnih rokodelcev — čez razgledno točko Žahenberc in mimo ribnika do Muzeja na prostem Rogatec.</p><div class="ebike-info"><span>⏱ ~2 h</span><span>🔋 60–80 %</span><span>⚙️ Tour/Sport</span></div>
       <div class="pods"><div class="pod"><span class="pv">30,8 km</span><span class="po">Razdalja</span></div><div class="pod"><span class="pv">↑ 1059 m</span><span class="po">Vzpon</span></div><div class="pod"><span class="pv">224–561 m</span><span class="po">Višina</span></div></div>
       <div class="gumbi"><a href="https://web.bikemap.net/r/17861475" target="_blank" rel="noopener" class="g gg">🗺 Odpri na Bikemap</a><a href="#" class="g gx">⬇ GPX</a></div>
@@ -170,9 +226,9 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
   <div class="kartica-spodaj">
     <div class="info">
       <div class="znacke"><span class="z zs">Srednja</span><span class="z zt">⚡ Eco / Tour</span></div>
-      <div class="st">03</div>
+      <div class="start-label" data-tez="srednja" data-cas="2-4" data-start="rogatec">Start: Rogatec</div><div class="st">03</div>
       <h2 class="nas">Dvorec Strmol – Vonarje – Podčetrtek – Grad Podčetrek – Olimje – Rogatec</h2>
-      <p class="opis">Kulturno-zgodovinska e-bike tura po Obsotelja, ki v enem dnevu popelje mimo Gradu Podčetrek in Samostana Olimje z najstarejšo lekarno v Sloveniji. Pretežno nizinska trasa — idealna za prve vožnje z e-kolesom.</p><div class="ebike-info"><span>⏱ ~3,5 h</span><span>🔋 50–70 %</span><span>⚙️ Eco/Tour</span></div>
+      <p class="opis">Kulturno-zgodovinska e-bike tura po Obsotelja, ki v enem dnevu popelje mimo Gradu Podčetrek in Samostana Olimje z najstarejšo lekarno v Sloveniji. Pretežno nizinska trasa z zmernim vzponom — z e-kolesom udobno za večino kolesarjev.</p><div class="ebike-info"><span>⏱ ~3,5 h</span><span>🔋 50–70 %</span><span>⚙️ Eco/Tour</span></div>
       <div class="pods"><div class="pod"><span class="pv">49,8 km</span><span class="po">Razdalja</span></div><div class="pod"><span class="pv">↑ 901 m</span><span class="po">Vzpon</span></div><div class="pod"><span class="pv">190–349 m</span><span class="po">Višina</span></div></div>
       <div class="gumbi"><a href="https://web.bikemap.net/r/17756852" target="_blank" rel="noopener" class="g gg">🗺 Odpri na Bikemap</a><a href="#" class="g gx">⬇ GPX</a></div>
     </div>
@@ -191,7 +247,7 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
   <div class="kartica-spodaj">
     <div class="info">
       <div class="znacke"><span class="z zs">Srednja</span><span class="z zt">⚡ Tour / Sport</span></div>
-      <div class="st">04</div>
+      <div class="start-label" data-tez="srednja" data-cas="celden" data-start="rogatec">Start: Rogatec</div><div class="st">04</div>
       <h2 class="nas">Muzej na prostem – Vonarje – Podčetrtek – Kumrovec – Dvorec Strmol – Rogatec</h2>
       <p class="opis">Čezmejna e-bike pustolovščina do Kumrovca — rojstnega kraja Josipa Broza Tita in muzejske vasi na prostem. Najdaljša tura — priporočamo polno baterijo in polnilec.</p><div class="ebike-info"><span>⏱ ~5 h</span><span>🔋 80–100 %</span><span>⚙️ Tour/Sport · polnjenje priporočeno</span></div>
       <div class="pods"><div class="pod"><span class="pv">69,2 km</span><span class="po">Razdalja</span></div><div class="pod"><span class="pv">↑ 1285 m</span><span class="po">Vzpon</span></div><div class="pod"><span class="pv">172–358 m</span><span class="po">Višina</span></div></div>
@@ -212,7 +268,7 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
   <div class="kartica-spodaj">
     <div class="info">
       <div class="znacke"><span class="z zz">Zahtevna</span><span class="z zt">⚡ Sport / Turbo</span></div>
-      <div class="st">05</div>
+      <div class="start-label" data-tez="zahtevnejsa" data-cas="2-4" data-start="rogatec">Start: Rogatec</div><div class="st">05</div>
       <h2 class="nas">Muzej na prostem – Donačka Gora – Ptujska Gora – Ptuj</h2>
       <p class="opis">Ambiciozna e-bike tura iz Rogatca na Rudijev dom na Donački Gori, nato po hrbtih Haloz do bazilike Ptujska Gora in v najstarejše slovensko mesto Ptuj. Razgledi z Donačke Gore so nepozabni. Priporočen povratek z vlakom.</p><div class="ebike-info"><span>⏱ ~3 h</span><span>🔋 75–90 %</span><span>⚙️ Sport/Turbo</span></div>
       <div class="pods"><div class="pod"><span class="pv">38,5 km</span><span class="po">Razdalja</span></div><div class="pod"><span class="pv">↑ 1320 m</span><span class="po">Vzpon</span></div><div class="pod"><span class="pv">220–622 m</span><span class="po">Višina</span></div></div>
@@ -233,9 +289,9 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
   <div class="kartica-spodaj">
     <div class="info">
       <div class="znacke"><span class="z zl">Lahka</span><span class="z zt">⚡ Eco / Tour</span></div>
-      <div class="st">06</div>
+      <div class="start-label" data-tez="lahka" data-cas="celden" data-start="rogatec">Start: Rogatec</div><div class="st">06</div>
       <h2 class="nas">Muzej na prostem – Šmarje pri Jelšah – Celje – Žalec</h2>
-      <p class="opis">E-bike pot od Muzeja na prostem Rogatec skozi slikovito podeželje do Šmarja pri Jelšah, Celja z zgodovinskim jedrom in Celjskim gradom, do Žalca — središča Savinjske doline, znaega po hmeljarstvu in fontani piva.</p><div class="ebike-info"><span>⏱ ~4 h</span><span>🔋 60–75 %</span><span>⚙️ Eco/Tour</span></div>
+      <p class="opis">E-bike pot od Muzeja na prostem Rogatec skozi slikovito podeželje do Šmarja pri Jelšah, Celja z zgodovinskim jedrom in Celjskim gradom, do Žalca — središča Savinjske doline, znane po hmeljarstvu in fontani piva.</p><div class="ebike-info"><span>⏱ ~4 h</span><span>🔋 60–75 %</span><span>⚙️ Eco/Tour</span></div>
       <div class="pods"><div class="pod"><span class="pv">53,6 km</span><span class="po">Razdalja</span></div><div class="pod"><span class="pv">↑ 734 m</span><span class="po">Vzpon</span></div><div class="pod"><span class="pv">218–305 m</span><span class="po">Višina</span></div></div>
       <div class="gumbi"><a href="https://web.bikemap.net/r/18229768" target="_blank" rel="noopener" class="g gg">🗺 Odpri na Bikemap</a><a href="#" class="g gx">⬇ GPX</a></div>
     </div>
@@ -249,12 +305,12 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
 
 <div class="razdelek">
   <h2>Najem e-kolesa</h2>
-  <p class="razdelek-pod">E-kolesa na voljo pri Muzeju na prostem Rogatec. Rezervacija priporočena.</p>
+  <p class="razdelek-pod">Rezervacija e-kolesa po dogovoru — po želji dodajte vodiča ali celoten e-bike paket.</p>
   <div class="najem-grid">
     <div class="najem-karta">
       <h3>E-kolo — dnevni najem</h3>
-      <div class="najem-cena">— <span>cena bo objavljena kmalu</span></div>
-      <p class="najem-opis">Baterija zadošča za vse ture do 50 km. Za daljše priporočamo polnjenje na poti.</p>
+      <div class="najem-cena">36 € <span>/ dan</span></div>
+      <p class="najem-opis">Rezervacija e-kolesa po dogovoru. Baterija zadošča za vse ture do 50 km.</p>
     </div>
     <div class="najem-karta">
       <h3>E-kolo + vodnik</h3>
@@ -297,7 +353,7 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
 <div class="doziv">
   <div class="doziv-k">
     <h2>⚡ E-bike doživetje Rogatec <span style="font-size:1.2rem;opacity:.85;font-weight:400;">— 163 €</span></h2>
-    <p style="font-size:.9rem;color:rgba(255,255,255,.82);margin-bottom:24px;font-style:italic;">Popoln paket za nepozabno kolesarsko pustolovščino po Obsotelju</p>
+    <p style="font-size:.9rem;color:rgba(255,255,255,.82);margin-bottom:24px;font-style:italic;">Popoln e-bike paket za doživetje Rogatca in Obsotelja</p>
     <div class="doziv-grid">
       <div class="doziv-item"><strong>⚡ E-kolo vključeno</strong><em>1 dan</em><p>Električno kolo za vso dolžino izbrane ture</p></div>
       <div class="doziv-item"><strong>🏛 Vstopnica</strong><em>Muzej + Dvorec</em><p>Ogled Muzeja na prostem in Dvorca Strmol Rogatec</p></div>
@@ -313,14 +369,15 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
 
 <div style="max-width:1060px;margin:0 auto 40px;padding:0 16px;">
   <div style="background:#f9f6f5;border-radius:8px;padding:28px 32px;border-left:4px solid #8B3A2A;">
-    <h2 style="font-family:'EB Garamond',serif;font-size:1.4rem;color:#5a1f12;margin-bottom:16px;">ℹ️ Vse kar potrebuješ za e-bike turo</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
-      <div style="font-size:.88rem;color:#555;line-height:1.6;">✅ Vse ture zasnovane za e-kolesa</div>
-      <div style="font-size:.88rem;color:#555;line-height:1.6;">🚴 Najem e-kolesa na mestu</div>
-      <div style="font-size:.88rem;color:#555;line-height:1.6;">🗺 GPX navigacija za vsako turo</div>
-      <div style="font-size:.88rem;color:#555;line-height:1.6;">👤 Možnost kolesarskega vodnika</div>
-      <div style="font-size:.88rem;color:#555;line-height:1.6;">📞 Pomoč pri izbiri ture: TIC Rogatec</div>
-      <div style="font-size:.88rem;color:#555;line-height:1.6;">🔋 Nasvet glede baterije za vsako turo</div>
+    <h2 style="font-family:'EB Garamond',serif;font-size:1.4rem;color:#5a1f12;margin-bottom:8px;">Vse ture so prilagojene e-kolesom</h2>
+    <p style="font-size:.88rem;color:#666;line-height:1.65;margin-bottom:16px;">Trase na tej strani so izbrane za sproščeno raziskovanje z e-kolesom. Pomagamo pri izbiri primerne poti, najemu e-kolesa, GPX navigaciji in organizaciji doživetja.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
+      <div style="font-size:.85rem;color:#555;line-height:1.6;">✅ Vse ture zasnovane za e-kolesa</div>
+      <div style="font-size:.85rem;color:#555;line-height:1.6;">🚴 Najem e-kolesa po dogovoru</div>
+      <div style="font-size:.85rem;color:#555;line-height:1.6;">🗺 GPX navigacija za vsako turo</div>
+      <div style="font-size:.85rem;color:#555;line-height:1.6;">👤 Možnost certificiranega vodnika</div>
+      <div style="font-size:.85rem;color:#555;line-height:1.6;">📞 TIC Rogatec — pomoč pri rezervaciji</div>
+      <div style="font-size:.85rem;color:#555;line-height:1.6;">🔋 E-bike podatki za vsako traso</div>
     </div>
   </div>
 </div>
@@ -340,6 +397,75 @@ document.getElementById('lb').addEventListener('click',function(e){if(e.target==
 document.addEventListener('keydown',e=>{const lb=document.getElementById('lb');if(!lb.classList.contains('open'))return;if(e.key==='Escape')lb.classList.remove('open');if(e.key==='ArrowLeft')lbNav(-1);if(e.key==='ArrowRight')lbNav(1);});
 function aktivirajMapo(el){el.classList.add('aktiven');}
 if(window.innerWidth>720){document.querySelectorAll('.mapa-wrap').forEach(m=>m.classList.add('aktiven'));}
+</script>
+
+<script>
+// FILTER LOGIKA
+const karte = document.querySelectorAll('.kartica');
+
+// Pridobi meta podatke za vsako kartico iz start-label
+karte.forEach(k => {
+  const sl = k.querySelector('.start-label');
+  if(sl){
+    k.dataset.tez = sl.dataset.tez || '';
+    k.dataset.cas = sl.dataset.cas || '';
+    k.dataset.start = sl.dataset.start || '';
+  }
+});
+
+let aktivTez = '', aktivCas = '', aktivStart = '';
+
+function filtriraj(){
+  karte.forEach(k => {
+    const tez = k.dataset.tez || '';
+    const cas = k.dataset.cas || '';
+    const start = k.dataset.start || '';
+    
+    const tezOk = !aktivTez || tez === aktivTez;
+    const casOk = !aktivCas || cas === aktivCas;
+    const startOk = !aktivStart || start === aktivStart;
+    
+    if(tezOk && casOk && startOk){
+      k.classList.remove('skrij');
+    } else {
+      k.classList.add('skrij');
+    }
+  });
+  
+  // Scroll do prvega vidnega
+  const prvi = document.querySelector('.kartica:not(.skrij)');
+  if(prvi) prvi.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// Chip klik
+document.querySelectorAll('#f-tezavnost .chip').forEach(c => {
+  c.addEventListener('click', function(){
+    const val = this.dataset.val;
+    if(aktivTez === val){ aktivTez = ''; this.classList.remove('aktiven'); }
+    else {
+      document.querySelectorAll('#f-tezavnost .chip').forEach(x => x.classList.remove('aktiven'));
+      aktivTez = val; this.classList.add('aktiven');
+    }
+    filtriraj();
+  });
+});
+
+document.querySelectorAll('#f-cas .chip').forEach(c => {
+  c.addEventListener('click', function(){
+    const val = this.dataset.val;
+    if(aktivCas === val){ aktivCas = ''; this.classList.remove('aktiven'); }
+    else {
+      document.querySelectorAll('#f-cas .chip').forEach(x => x.classList.remove('aktiven'));
+      aktivCas = val; this.classList.add('aktiven');
+    }
+    filtriraj();
+  });
+});
+
+document.getElementById('f-start').addEventListener('change', function(){
+  aktivStart = this.value;
+  filtriraj();
+});
 </script>
 </body>
 </html>
