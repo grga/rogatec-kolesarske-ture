@@ -95,7 +95,7 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
 .filter-notranjost{background:#f9f6f5;border-radius:8px;padding:24px 28px;border:1px solid #e4deda;}
 .filter-naslov{font-family:'EB Garamond',serif;font-size:1.3rem;font-weight:700;color:#5a1f12;margin-bottom:4px;}
 .filter-opis{font-size:.85rem;color:#888;margin-bottom:20px;}
-.filter-vrstice{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
+.filter-vrstice{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
 .filter-skupina label{display:block;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#999;margin-bottom:8px;}
 .chipi{display:flex;flex-wrap:wrap;gap:6px;}
 .chip{font-size:.78rem;font-weight:600;padding:5px 12px;border-radius:20px;border:1.5px solid #d4b8b3;background:#fff;color:#8B3A2A;cursor:pointer;transition:all .15s;}
@@ -106,8 +106,8 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
 /* Start label na karticah */
 .start-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:#999;margin-bottom:2px;}
 /* Kartica dim ob filtriranju */
-.kartica.skrij{opacity:.25;pointer-events:none;}
-.kartica{transition:opacity .25s;}
+.kartica.skrij{display:none;}
+.kartica{transition:none;}
 @media(max-width:720px){.filter-vrstice{grid-template-columns:1fr;gap:14px;}.filter-notranjost{padding:18px 16px;}}
 @media(max-width:720px){
   .uvod{padding:36px 20px 32px;}.uvod h1{font-size:2rem;}
@@ -141,35 +141,25 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
 <div class="filter-blok">
   <div class="filter-notranjost">
     <div class="filter-naslov">Izberi svojo e-bike turo</div>
-    <p class="filter-opis">Najdi traso glede na stopnjo, začetno točko in čas, ki ga imaš na voljo.</p>
+    <p class="filter-opis">Najdi traso glede na zahtevnost in čas, ki ga imaš na voljo.</p>
     <div class="filter-vrstice">
       <div class="filter-skupina">
         <label>Zahtevnost</label>
         <div class="chipi" id="f-tezavnost">
-          <button class="chip" data-val="lahka">Lahka</button>
           <button class="chip" data-val="srednja">Srednja</button>
           <button class="chip" data-val="zahtevnejsa">Zahtevnejša</button>
         </div>
       </div>
       <div class="filter-skupina">
-        <label>Začetna točka</label>
-        <select class="filter-select" id="f-start">
-          <option value="">Vse</option>
-          <option value="rogatec">Rogatec</option>
-          <option value="zetale">Žetale</option>
-          <option value="ptuj">Ptuj</option>
-          <option value="smarje">Šmarje pri Jelšah</option>
-          <option value="dogovor">Po dogovoru</option>
-        </select>
-      </div>
-      <div class="filter-skupina">
         <label>Čas</label>
         <div class="chipi" id="f-cas">
-          <button class="chip" data-val="do2">Do 2 h</button>
           <button class="chip" data-val="2-4">2–4 h</button>
           <button class="chip" data-val="celden">Cel dan</button>
         </div>
       </div>
+    </div>
+    <div style="margin-top:16px;display:none;" id="f-reset-wrap">
+      <button id="f-reset" style="font-size:.78rem;font-weight:600;padding:5px 14px;border-radius:20px;border:1.5px solid #8B3A2A;background:#fff;color:#8B3A2A;cursor:pointer;">✕ Prikaži vse ture</button>
     </div>
   </div>
 </div>
@@ -303,6 +293,7 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#bbb;border-top:1px 
 </article>
 </div>
 
+<div id="f-ni-rezultatov" style="display:none;text-align:center;padding:32px 16px;font-size:.95rem;color:#999;font-style:italic;">Za izbrano kombinacijo ni tur. Poskusi z drugo izbiro.</div>
 <div class="razdelek">
   <h2>Najem e-kolesa</h2>
   <p class="razdelek-pod">Rezervacija e-kolesa po dogovoru — po želji dodajte vodiča ali celoten e-bike paket.</p>
@@ -400,51 +391,57 @@ if(window.innerWidth>720){document.querySelectorAll('.mapa-wrap').forEach(m=>m.c
 </script>
 
 <script>
-// FILTER LOGIKA
-const karte = document.querySelectorAll('.kartica');
+// FILTER LOGIKA — samo zahtevnost in čas
+const karte = document.querySelectorAll('.seznam .kartica');
 
-// Pridobi meta podatke za vsako kartico iz start-label
 karte.forEach(k => {
   const sl = k.querySelector('.start-label');
   if(sl){
     k.dataset.tez = sl.dataset.tez || '';
     k.dataset.cas = sl.dataset.cas || '';
-    k.dataset.start = sl.dataset.start || '';
   }
 });
 
-let aktivTez = '', aktivCas = '', aktivStart = '';
+let aktivTez = '', aktivCas = '';
 
 function filtriraj(){
+  let vidnih = 0;
   karte.forEach(k => {
-    const tez = k.dataset.tez || '';
-    const cas = k.dataset.cas || '';
-    const start = k.dataset.start || '';
-    
-    const tezOk = !aktivTez || tez === aktivTez;
-    const casOk = !aktivCas || cas === aktivCas;
-    const startOk = !aktivStart || start === aktivStart;
-    
-    if(tezOk && casOk && startOk){
-      k.classList.remove('skrij');
-    } else {
-      k.classList.add('skrij');
-    }
+    const tezOk = !aktivTez || k.dataset.tez === aktivTez;
+    const casOk = !aktivCas || k.dataset.cas === aktivCas;
+    const pokazi = tezOk && casOk;
+    k.classList.toggle('skrij', !pokazi);
+    if(pokazi) vidnih++;
   });
-  
-  // Scroll do prvega vidnega
-  const prvi = document.querySelector('.kartica:not(.skrij)');
-  if(prvi) prvi.scrollIntoView({behavior:'smooth', block:'start'});
+  const msg = document.getElementById('f-ni-rezultatov');
+  if(msg) msg.style.display = vidnih === 0 ? 'block' : 'none';
+  // Pokaži/skrij reset gumb
+  const resetWrap = document.getElementById('f-reset-wrap');
+  if(resetWrap) resetWrap.style.display = (aktivTez || aktivCas) ? 'block' : 'none';
 }
 
-// Chip klik
+function resetFilter(){
+  aktivTez = ''; aktivCas = '';
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('aktiven'));
+  karte.forEach(k => k.classList.remove('skrij'));
+  const msg = document.getElementById('f-ni-rezultatov');
+  if(msg) msg.style.display = 'none';
+  const resetWrap = document.getElementById('f-reset-wrap');
+  if(resetWrap) resetWrap.style.display = 'none';
+}
+
+document.getElementById('f-reset').addEventListener('click', resetFilter);
+
 document.querySelectorAll('#f-tezavnost .chip').forEach(c => {
   c.addEventListener('click', function(){
     const val = this.dataset.val;
-    if(aktivTez === val){ aktivTez = ''; this.classList.remove('aktiven'); }
-    else {
+    if(aktivTez === val){
+      aktivTez = '';
+      this.classList.remove('aktiven');
+    } else {
       document.querySelectorAll('#f-tezavnost .chip').forEach(x => x.classList.remove('aktiven'));
-      aktivTez = val; this.classList.add('aktiven');
+      aktivTez = val;
+      this.classList.add('aktiven');
     }
     filtriraj();
   });
@@ -453,18 +450,16 @@ document.querySelectorAll('#f-tezavnost .chip').forEach(c => {
 document.querySelectorAll('#f-cas .chip').forEach(c => {
   c.addEventListener('click', function(){
     const val = this.dataset.val;
-    if(aktivCas === val){ aktivCas = ''; this.classList.remove('aktiven'); }
-    else {
+    if(aktivCas === val){
+      aktivCas = '';
+      this.classList.remove('aktiven');
+    } else {
       document.querySelectorAll('#f-cas .chip').forEach(x => x.classList.remove('aktiven'));
-      aktivCas = val; this.classList.add('aktiven');
+      aktivCas = val;
+      this.classList.add('aktiven');
     }
     filtriraj();
   });
-});
-
-document.getElementById('f-start').addEventListener('change', function(){
-  aktivStart = this.value;
-  filtriraj();
 });
 </script>
 </body>
